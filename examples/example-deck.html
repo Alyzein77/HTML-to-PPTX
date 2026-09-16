@@ -2,61 +2,285 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Example deck</title>
+<title>The Source of Truth Moved</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Naskh+Arabic:wght@600&display=swap" crossorigin="anonymous" />
 <style>
-  body{margin:0;background:#dddddd}
-  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;background:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#111111;margin:0 0 24px 0}
-  .band{position:absolute;left:0;top:0;width:1920px;height:120px;background:#f2f2f2}
-  .mark{position:absolute;left:100px;top:36px;width:48px;height:48px;border-radius:10px;background:#1f2a44}
-  .brand{position:absolute;left:164px;top:40px;width:400px;font-size:34px;font-weight:700;color:#1f2a44}
-  .kicker{position:absolute;left:100px;width:1720px;font-size:26px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:#1f2a44}
-  .title{position:absolute;left:100px;margin:0;width:1720px;font-size:80px;font-weight:700;line-height:1.1}
-  .card{position:absolute;top:520px;width:520px;height:360px;background:#ffffff;border:2px solid #1f2a44;border-radius:8px}
-  .card .n{position:absolute;left:40px;top:36px;width:200px;font-size:64px;font-weight:700;color:#1f2a44}
-  .card .h{position:absolute;left:40px;top:130px;width:440px;font-size:34px;font-weight:700}
-  .card .p{position:absolute;left:40px;top:190px;width:440px;font-size:26px;line-height:1.4;color:#444444}
-  .foot{position:absolute;left:100px;top:1000px;width:1200px;font-size:20px;color:#777777}
-  .num{position:absolute;left:1720px;top:1000px;width:100px;text-align:right;font-size:20px;color:#777777}
-  th,td{text-align:left;padding:22px 28px}
-  th{background:#1f2a44;color:#ffffff}
-  td{border-bottom:2px solid #eeeeee}
+  /* Athr21 tokens */
+  :root{--uv:#6D28FF;--uv-deep:#4A18B8;--uv-mist:#EDE7FA;--lime:#CCFF00;--void:#0A0118;--void-2:#12082B;--void-3:#241553;--paper:#F7F4FD;--ink:#4A4160;--quiet:#71658D;--grey:#8478A0;--line:#E6E0F0;--on-uv:#EBE5FF;--white:#FFFFFF}
+  body{margin:0;background:#1a1a1a;font-family:Inter,"Helvetica Neue",Arial,sans-serif}
+  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--white);color:var(--void);margin:0 0 24px 0}
+  .slide.dark{background:var(--void);color:var(--white)}
+  .slide.paper{background:var(--paper)}
+  /* the record mark: 3x3, lime live top-left, six violet, two open */
+  .mark{position:absolute;left:120px;top:72px;width:66px;height:66px}
+  .mark i{position:absolute;width:18px;height:18px;background:var(--uv)}
+  .mark i.live{background:var(--lime)}
+  .mark i.open{background:transparent;border:2px solid var(--uv);width:14px;height:14px}
+  .brand{position:absolute;left:206px;top:84px;width:300px;font-size:30px;font-weight:700;letter-spacing:-0.5px}
+  .mk{position:absolute;left:120px;top:220px;width:1680px;font-size:22px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--uv)}
+  .dark .mk{color:var(--grey)}
+  h1,h2,h3,p{margin:0}
+  h1{position:absolute;left:120px;top:400px;width:1680px;font-size:112px;line-height:1.0;font-weight:700;letter-spacing:-3px}
+  h2{position:absolute;left:120px;top:270px;width:1500px;font-size:72px;line-height:1.06;font-weight:700;letter-spacing:-2px}
+  .lede{position:absolute;left:120px;width:1400px;font-size:30px;line-height:1.4;color:var(--ink)}
+  .dark .lede{color:var(--on-uv)}
+  .src{position:absolute;left:120px;top:960px;width:1600px;font-size:20px;color:var(--quiet)}
+  .dark .src{color:var(--grey)}
+  .num{position:absolute;left:1700px;top:960px;width:100px;text-align:right;font-size:20px;color:var(--grey)}
+  /* grids built with flex, fixed px */
+  .row{position:absolute;left:120px;display:flex;gap:32px}
+  .cell{width:388px;border-top:3px solid var(--void);padding-top:22px}
+  .cell h3{font-size:30px;font-weight:600;margin-bottom:10px}
+  .cell p{font-size:24px;line-height:1.4;color:var(--ink)}
+  .dark .cell{border-color:var(--void-3)}
+  .dark .cell p{color:var(--on-uv)}
+  .road .cell{width:304px}
+  .road b{display:block;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:var(--uv);margin-bottom:10px}
+  .road span{font-size:24px;line-height:1.35;color:var(--ink)}
+  .col{width:520px}
+  .col h3{font-size:20px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--quiet);margin-bottom:16px}
+  .col p{font-size:30px;line-height:1.35;color:var(--ink)}
+  .dark .col p{color:var(--on-uv)}
+  .quote{position:absolute;left:120px;top:400px;width:1300px;font-size:60px;line-height:1.2;font-weight:600;letter-spacing:-1.5px;border-left:8px solid var(--uv);padding-left:40px}
+  table{border-collapse:collapse;font-size:28px}
+  th{text-align:left;font-size:20px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--quiet);padding:16px 24px;border-bottom:3px solid var(--void)}
+  td{padding:22px 24px;border-bottom:2px solid var(--line);vertical-align:top;color:var(--ink)}
+  td.k{font-weight:600;color:var(--void)}
+  td.now{font-weight:600;color:var(--void)}
+  .chip{display:inline-block;padding:16px 22px;font-size:26px;font-weight:600;border:2px solid var(--line);color:var(--ink);margin:0 14px 14px 0}
+  .chip.on{background:var(--uv);border-color:var(--uv);color:var(--on-uv)}
+  .phone{width:440px;border:3px solid var(--void);border-radius:28px;padding:26px 22px;background:var(--white)}
+  .phone.rtl{text-align:right}
+  .blk{background:var(--uv-mist);color:var(--void);padding:12px 16px;font-size:20px;font-weight:600;border-radius:6px;margin-bottom:12px}
+  .blk.hot{border:3px dashed var(--uv)}
+  .blk.hot2{background:var(--uv);color:var(--on-uv)}
+  .blk.btn{background:var(--void);color:var(--white);text-align:center}
+  .cap{font-size:20px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--quiet);margin-bottom:16px}
+  .flow{position:absolute;left:120px;top:700px;display:flex;gap:14px;align-items:center}
+  .flow span{font-size:24px;font-weight:600;padding:16px 22px;background:var(--void-2);color:var(--on-uv);border:2px solid var(--void-3)}
+  .flow em{font-style:normal;font-size:28px;color:var(--grey)}
+  .flow span.live{background:var(--lime);color:var(--void);border-color:var(--lime)}
+  .ar{font-family:"Noto Naskh Arabic","Geeza Pro",serif}
 </style>
 </head>
 <body>
 
-<!-- Slide 1: title. A title slide carries no body text. -->
-<div class="slide" id="slide-1" data-pptx-notes="Open with the purpose of the session.">
-  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
-  <div class="kicker" style="top:420px">Internal</div>
-  <h1 class="title" style="top:470px">2027 Business Plan<br/>Working session</h1>
-  <div class="foot">Your company</div><div class="num">01</div>
+<!-- ===== 1 Opening: no body text on a title slide ===== -->
+<div class="slide dark" id="s1" data-pptx-notes="Open with the shift: the file used to be the truth. Now the shipped thing is.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">UX to product · 16 Sep 2026</div>
+  <h1>From handing off screens<br/>to owning the outcome.</h1>
+  <div class="num">01</div>
 </div>
 
-<!-- Slide 2: three cards in a row, never three stacked. -->
-<div class="slide" id="slide-2" data-pptx-notes="Three workstreams. Any count on a slide needs the named list in the report.">
-  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
-  <div class="kicker" style="top:200px">Where we are</div>
-  <h1 class="title" style="top:250px;font-size:64px">Three workstreams, one owner each</h1>
-  <div class="card" style="left:100px"><div class="n">01</div><div class="h">Fleet</div><div class="p">Utilisation, ageing and the replacement cycle.</div></div>
-  <div class="card" style="left:700px"><div class="n">02</div><div class="h">Revenue</div><div class="p">Rate, mix and channel by brand.</div></div>
-  <div class="card" style="left:1300px"><div class="n">03</div><div class="h">Operations</div><div class="p">Branch throughput and the support queue.</div></div>
-  <div class="foot">Your company</div><div class="num">02</div>
+<!-- ===== 2 The designer's week today ===== -->
+<div class="slide" id="s2" data-pptx-notes="Nothing here is bad design. The role stops at the file.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 1 · the week most designers know</div>
+  <h2>You design it. Someone else decides if it worked.</h2>
+  <div class="row road" style="top:480px">
+    <div class="cell"><b>Monday</b><span>A brief lands. The problem is already decided for you.</span></div>
+    <div class="cell"><b>Tuesday</b><span>Screens in Figma. Flows, states, the design system.</span></div>
+    <div class="cell"><b>Wednesday</b><span>Review. Opinions, not evidence.</span></div>
+    <div class="cell"><b>Thursday</b><span>Hand-off. The file leaves your hands.</span></div>
+    <div class="cell"><b>Weeks later</b><span>It ships 80% right. You never see the numbers.</span></div>
+  </div>
+  <p class="lede" style="top:820px">None of this is bad design. It's a design role that stops at the file.</p>
+  <div class="num">02</div>
 </div>
 
-<!-- Slide 3: native table. Backgrounds on th/td, never on tr. -->
-<div class="slide" id="slide-3" data-pptx-notes="Way forward comes last.">
-  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
-  <div class="kicker" style="top:200px">Way forward</div>
-  <h1 class="title" style="top:250px;font-size:64px">Next 30 days</h1>
-  <table style="position:absolute;left:100px;top:400px;width:1720px;border-collapse:collapse;font-size:30px">
-    <tr><th>Item</th><th>Owner</th><th>Due</th></tr>
-    <tr><td>Fleet ageing baseline</td><td>Fleet</td><td>Week 2</td></tr>
-    <tr><td>Rate card by brand</td><td>Revenue</td><td>Week 3</td></tr>
-    <tr><td>Support queue clean-up</td><td>Operations</td><td>Week 4</td></tr>
+<!-- ===== 3 The T-shaped designer ===== -->
+<div class="slide paper" id="s3" data-pptx-notes="The top bar used to need a PM, a developer and an analyst. AI makes it affordable for one designer. The stem stays human.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 2 · what's changing</div>
+  <h2>Companies now want one person who carries the screen and the result.</h2>
+  <!-- the T: wide top bar = product sense, deep stem = design craft -->
+  <div style="position:absolute;left:120px;top:500px;width:1100px;display:flex">
+    <div style="width:220px;padding:22px 18px;background:var(--uv);color:var(--on-uv);font-size:24px;font-weight:600;border-right:2px solid var(--uv-deep)">The problem</div>
+    <div style="width:220px;padding:22px 18px;background:var(--uv);color:var(--on-uv);font-size:24px;font-weight:600;border-right:2px solid var(--uv-deep)">The flow</div>
+    <div style="width:220px;padding:22px 18px;background:var(--uv);color:var(--on-uv);font-size:24px;font-weight:600;border-right:2px solid var(--uv-deep)">The build</div>
+    <div style="width:220px;padding:22px 18px;background:var(--uv);color:var(--on-uv);font-size:24px;font-weight:600;border-right:2px solid var(--uv-deep)">The numbers</div>
+    <div style="width:220px;padding:22px 18px;background:var(--uv);color:var(--on-uv);font-size:24px;font-weight:600">The trade-offs</div>
+  </div>
+  <div style="position:absolute;left:120px;top:576px;width:420px;background:var(--void);color:var(--white);font-size:22px;font-weight:600">
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Talking to users</div>
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Testing with real people</div>
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Taste</div>
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Turning findings into insight</div>
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Access for everyone</div>
+    <div style="padding:16px 20px;border-top:2px solid var(--void-3)">Ethics and trust</div>
+  </div>
+  <p class="lede" style="left:600px;top:600px;width:1000px;font-size:28px">The top bar used to need a product manager, a developer and an analyst. AI makes it affordable for one designer to carry. The stem stays deep and stays human. That's the T-shaped designer.</p>
+  <div class="num">03</div>
+</div>
+
+<!-- ===== 4 Figma is still alive ===== -->
+<div class="slide" id="s4" data-pptx-notes="Be fair to the tool. What moved is where the truth lives.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Before we go on · to be fair</div>
+  <h2>Figma is still alive. In most companies, it stays.</h2>
+  <div class="row" style="top:500px">
+    <div class="cell"><h3>Big design teams</h3><p>Ten designers on one live canvas. Nothing beats it.</p></div>
+    <div class="cell"><h3>Shared libraries</h3><p>One system governed across many products.</p></div>
+    <div class="cell"><h3>Separate engineering</h3><p>Where hand-off is how the organisation works.</p></div>
+    <div class="cell"><h3>Hand craft</h3><p>Illustration and pushing pixels by eye.</p></div>
+  </div>
+  <p class="lede" style="top:800px">What moved is not the tool. It's where the truth lives. For a small team, what you design can be what ships.</p>
+  <div class="num">04</div>
+</div>
+
+<!-- ===== 5 The brief ===== -->
+<div class="slide dark" id="s5" data-pptx-notes="One product person and Claude. Everything that follows happened on athr21.com.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 3 · the case</div>
+  <h2>A brief with no designer and no developer on it.</h2>
+  <div class="row" style="top:520px;gap:80px">
+    <div class="col" style="width:760px"><h3>The brief</h3><p>Explain a service you can't see, company memory, to a busy founder in Egypt or the Gulf. In English and in Egyptian Arabic. Get them to take the first step.</p></div>
+    <div class="col" style="width:760px"><h3>The team</h3><p>One product person and Claude. The site is athr21.com, and everything that follows happened on it.</p></div>
+  </div>
+  <div class="num">05</div>
+</div>
+
+<!-- ===== 6 Understand the visitor ===== -->
+<div class="slide" id="s6" data-pptx-notes="Every screen after this answers three questions, in this order.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 4 · understand · who walks in</div>
+  <h2>Start with the person, not the page.</h2>
+  <div style="position:absolute;left:120px;top:460px;width:1680px;background:var(--paper);padding:40px;box-sizing:border-box;display:flex;gap:36px">
+    <div style="width:110px;height:110px;background:var(--uv);color:var(--on-uv);font-size:52px;font-weight:700;text-align:center;line-height:110px">F</div>
+    <div style="width:1400px">
+      <h3 style="font-size:32px;font-weight:600;margin-bottom:14px">The founder whose company outgrew their head</h3>
+      <p style="font-size:26px;line-height:1.4;color:var(--ink);margin-bottom:22px">50 to 250 people. Arrives because something broke: a key person left, a second country opened, the same argument keeps coming back.</p>
+      <span class="chip" style="background:var(--white)">"What do I actually get?"</span><span class="chip" style="background:var(--white)">"How long does it take?"</span><span class="chip" style="background:var(--white)">"What's the first step?"</span>
+    </div>
+  </div>
+  <p class="lede" style="top:840px">Every screen after this has one job: answer those three questions in that order.</p>
+  <div class="num">06</div>
+</div>
+
+<!-- ===== 7 Critique before users ===== -->
+<div class="slide paper" id="s7" data-pptx-notes="A reviewer panel of UX, brand and accessibility seats, run with Claude. Sketches, not screenshots. The panel is a filter, not a replacement for users.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 5 · critique · a panel before any user</div>
+  <h2>The panel caught what we were too close to see.</h2>
+  <div class="row" style="top:430px;gap:120px">
+    <div style="width:700px"><div class="cap">Before</div>
+      <div class="phone"><div class="blk hot">Pick your AI: Claude · ChatGPT · Manus</div><div class="blk">Our services</div><div class="blk">The Check</div><div class="blk btn">Start</div><div class="blk btn" style="margin-bottom:0">Start</div></div>
+      <p style="font-size:24px;line-height:1.4;color:var(--ink);margin-top:18px;width:640px">Visitors met tool choices before knowing what they'd buy. Two buttons fought for the same tap.</p></div>
+    <div style="width:700px"><div class="cap">After</div>
+      <div class="phone"><div class="blk">Your company outgrew your head</div><div class="blk hot2">The Check: 2 to 3 weeks, a map you keep</div><div class="blk">Then choose a track, if you want one</div><div class="blk btn" style="margin-bottom:0">Answer 5 questions</div></div>
+      <p style="font-size:24px;line-height:1.4;color:var(--ink);margin-top:18px;width:640px">Problem first, then the first step, then the options. One action per view.</p></div>
+  </div>
+  <div class="src">A reviewer panel of UX, brand and accessibility seats, run with Claude on 8 Sep. Sketches, not screenshots. Shipped the next day.</div>
+  <div class="num">07</div>
+</div>
+
+<!-- ===== 8 See it like the user ===== -->
+<div class="slide" id="s8" data-pptx-notes="Seven review rounds on real screens. Five of seven problems were invisible in the design file.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 6 · prototype · design in the real thing</div>
+  <h2>It looked right in the file. It broke in the hand.</h2>
+  <p class="lede" style="top:470px">One illustration went through seven review rounds on real screens. Five of the seven problems could not be seen in the design file.</p>
+  <div style="position:absolute;left:120px;top:620px;width:1680px">
+    <span class="chip on">Groups had no labels</span><span class="chip on">Lines contradicted the message</span><span class="chip on">Labels floated away from shapes</span><span class="chip on">Logo too small to matter</span><span class="chip on">Arabic page didn't mirror</span><span class="chip">Unreadable on a phone</span><span class="chip">Arabic letters spaced apart</span>
+  </div>
+  <div class="src"><span style="display:inline-block;width:16px;height:16px;background:var(--uv);margin-right:10px"></span>only visible once rendered on a real screen</div>
+  <div class="num">08</div>
+</div>
+
+<!-- ===== 9 Two languages ===== -->
+<div class="slide paper" id="s9" data-pptx-notes="Arabic is a mirror with rules. The language we would have designed second turned out to matter most.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 7 · a second language is a second user</div>
+  <h2>Arabic is not a translation. It's a mirror, with rules.</h2>
+  <div class="row" style="top:440px;gap:120px">
+    <div style="width:700px"><div class="cap">English</div><div class="phone"><div class="blk">reads this way →</div><div class="blk" style="margin-bottom:0">Logo stays</div></div></div>
+    <div style="width:700px"><div class="cap ar" style="letter-spacing:0;text-transform:none;font-size:26px">مصري</div><div class="phone rtl"><div class="blk">← reads this way</div><div class="blk" style="margin-bottom:0">Logo does not flip</div></div></div>
+  </div>
+  <p class="lede" style="top:800px">The surprise: Arabic readers out-read English readers. The language we'd have designed second turned out to matter most.</p>
+  <div class="num">09</div>
+</div>
+
+<!-- ===== 10 Data argues with taste ===== -->
+<div class="slide" id="s10" data-pptx-notes="The fix in the sign-up flow was a daily call list, not a new screen.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 8 · measure · data argues with taste</div>
+  <h2>The idea was a "most read" section. The data said no.</h2>
+  <div class="row" style="top:470px;gap:60px">
+    <div class="col"><h3>What we felt</h3><p>Show the popular articles. Social proof works.</p></div>
+    <div class="col"><h3>What we found</h3><p>Too few readers to call anything popular, and the "top" article changed depending on how you counted.</p></div>
+    <div class="col"><h3>What we designed</h3><p>Three hand-picked articles, one per service. No fake popularity.</p></div>
+  </div>
+  <p class="lede" style="top:800px;width:1600px">And in the sign-up flow: two real people stopped at question five and nobody followed up. The fix was a daily call list, not a new screen.</p>
+  <div class="num">10</div>
+</div>
+
+<!-- ===== 11 Memory: the second brain ===== -->
+<div class="slide dark" id="s11" data-pptx-notes="This is the part no design tool had. Every change starts with the problem written down and ends with the decision recorded.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 9 · the part no design tool had</div>
+  <p class="quote" style="top:330px">We cut the same words twice, six hours apart, because nobody wrote down the first decision.</p>
+  <p class="lede" style="top:700px;width:1500px">So now every change starts with the problem written down and ends with the decision recorded. Next time, the design starts from what we already learned. That's the second brain.</p>
+  <div class="num">11</div>
+</div>
+
+<!-- ===== 12 The same week, rewritten ===== -->
+<div class="slide paper" id="s12" data-pptx-notes="Same designer, wider role. Read the Now column top to bottom.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 10 · the same week, rewritten</div>
+  <h2>Same designer. Wider role.</h2>
+  <table style="position:absolute;left:120px;top:430px;width:1500px">
+    <tr><th style="width:240px">Step</th><th style="width:600px">Before</th><th>Now</th></tr>
+    <tr><td class="k">Brief</td><td>Handed a problem</td><td class="now">Helps frame the problem</td></tr>
+    <tr><td class="k">Design</td><td>Screens in a file</td><td class="now">Working pages, both languages</td></tr>
+    <tr><td class="k">Critique</td><td>Opinions in a review</td><td class="now">A panel, then real users</td></tr>
+    <tr><td class="k">Hand-off</td><td>The file leaves</td><td class="now">What you design is what ships</td></tr>
+    <tr><td class="k">Result</td><td>Never sees the numbers</td><td class="now">Reads the funnel, changes the design</td></tr>
   </table>
-  <div style="position:absolute;left:100px;top:760px;width:12px;height:120px;background:#e8590c"></div>
-  <div style="position:absolute;left:140px;top:760px;width:1600px;font-size:34px;line-height:1.4;font-weight:700">Decision needed: confirm the three owners before the plan is drafted.</div>
-  <div class="foot">Your company</div><div class="num">03</div>
+  <div class="num">12</div>
+</div>
+
+<!-- ===== 13 What still needs a designer ===== -->
+<div class="slide" id="s13" data-pptx-notes="Invite the room to add to this list.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Chapter 11 · the deep part of the T</div>
+  <h2>What only a designer brings. Add to this list.</h2>
+  <div class="row" style="top:470px;gap:40px">
+    <div class="cell" style="width:520px"><h3>Interviews</h3><p>Hearing what the user doesn't say.</p></div>
+    <div class="cell" style="width:520px"><h3>Testing</h3><p>Watching a real thumb miss a real button.</p></div>
+    <div class="cell" style="width:520px"><h3>Taste</h3><p>Knowing when polish has made it bland.</p></div>
+  </div>
+  <div class="row" style="top:720px;gap:40px">
+    <div class="cell" style="width:520px"><h3>Insight</h3><p>AI summarises. You decide what matters.</p></div>
+    <div class="cell" style="width:520px"><h3>Access</h3><p>People who use screen readers, not only a checker.</p></div>
+    <div class="cell" style="width:520px"><h3>Ethics</h3><p>Refusing the dark pattern the numbers reward.</p></div>
+  </div>
+  <div class="num">13</div>
+</div>
+
+<!-- ===== 14 Now: the loop, way forward last ===== -->
+<div class="slide dark" id="s14" data-pptx-notes="One real change, designed live. Frame, design, critique, see it on screen, decide and remember.">
+  <div class="mark"><i class="live" style="left:0;top:0"></i><i style="left:24px;top:0"></i><i style="left:48px;top:0"></i><i style="left:0;top:24px"></i><i style="left:24px;top:24px"></i><i style="left:48px;top:24px"></i><i style="left:0;top:48px"></i><i class="open" style="left:24px;top:48px"></i><i class="open" style="left:48px;top:48px"></i></div>
+  <div class="brand">Athr21</div>
+  <div class="mk">Now · in this session</div>
+  <h2>One real change, designed live. Then your verdict.</h2>
+  <p class="lede" style="top:480px;width:1500px">The bottom of the home page feels heavy: an old news item sits on top of a second list. We'll take it from problem to shipped decision, together.</p>
+  <div class="flow"><span>Frame the problem</span><em>→</em><span>Design it</span><em>→</em><span>Critique</span><em>→</em><span>See it on screen</span><em>→</em><span class="live">Decide and remember</span></div>
+  <div class="src" style="color:var(--grey)">athr21.com · hello@athr21.com</div>
+  <div class="num">14</div>
 </div>
 
 </body>

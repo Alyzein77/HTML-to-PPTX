@@ -19,7 +19,7 @@ Every `.slide` root: fixed px size (1920 x 1080), `position: relative`, `overflo
 | `transform: rotate(Ndeg)` | the only transform that survives |
 | font-size px, weight 100 to 900, italic, line-height, letter-spacing, text-transform, text-align, underline | |
 | inline runs `<strong>`, `<em>`, `<span style>` | preserved, also inside table cells |
-| `<table>` | becomes a native PowerPoint table. Backgrounds go on `<td>`/`<th>`, never on `<tr>` |
+| `<table>` | becomes a native PowerPoint table. Backgrounds go on `<td>`/`<th>`, never on `<tr>`. Cell padding must be symmetric (`16px 24px`); a 0 side breaks the cell margins |
 | `<ul>`, `<ol>` | native bullets |
 | `<img>` local path, `data:` URI, or https with CORS | `object-fit: cover` and `border-radius` on images work |
 | inline `<svg>` | rasterised |
@@ -49,6 +49,7 @@ Every `.slide` root: fixed px size (1920 x 1080), `position: relative`, `overflo
 
 - Footer line with no `width` wrapped onto two lines in PowerPoint. Fixed by adding `width`.
 - Table header row styled on `<tr>` exported with a transparent fill and white text, so the header vanished. Fixed by moving the style to the `<th>` cells.
+- Cell padding `0 24px 16px 0` exported as 9-inch cell margins, so the whole table vanished. Symmetric padding (`16px 24px`) fixed it.
 - Relative image paths (`images/logo.png`) work with the command-line exporter. They do not work with the in-browser library, so keep using the exporter.
 - Fonts embedded in the .pptx are honoured by PowerPoint. LibreOffice ignores them, so a LibreOffice preview can look wrong when the file is fine.
 - The exporter's `--title` and `--author` flags are silently ignored in 2.1.2; the file says "PptxGenJS". `meta.mjs` fixes the properties after export.

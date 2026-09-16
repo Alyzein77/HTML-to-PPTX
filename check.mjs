@@ -10,6 +10,7 @@ export const rules = [
   [/\d+\s*(vh|vw|vmin|vmax)\b/i, 'vh/vw units break sizing. Use px.'],
   [/backdrop-filter|clip-path|mask-image|mix-blend-mode|conic-gradient/i, 'backdrop-filter, clip-path, mask-image, blend modes and conic-gradient are dropped.'],
   [/box-shadow\s*:\s*inset/i, 'inset box-shadow is ignored.'],
+  [/(?:<t[dh][^>]*style="[^"]*|\bt[dh]\s*\{[^}]*)padding\s*:\s*[^;"}]*\b0(?:px)?\b/i, 'Cell padding with a 0 side (e.g. padding:0 24px 16px 0) exports as huge margins and hides the table. Use symmetric padding like 16px 24px.'],
   [/<tr[^>]*style="[^"]*background/i, 'background on <tr> is lost. Put the background on each <td>/<th> instead.'],
   [/<script[^>]*src="https?:\/\//i, 'External <script src="http..."> in the HTML. Not needed for export; remove it.'],
   [/@latest/i, '"@latest" pulls unpinned code from the internet. Pin the version or remove.'],

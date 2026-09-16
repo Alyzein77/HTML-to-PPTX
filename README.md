@@ -2,6 +2,10 @@
 
 Turn HTML slides into an editable PowerPoint on your own machine.
 
+![The 14-slide example deck, rendered from the exported .pptx](examples/example-deck.png)
+
+The example is a real talk by [Athr21](https://athr21.com) on how a company builds its second brain, originally written as a scrolling web page. `examples/example-deck.html` is that deck rewritten in the export-safe form this skill teaches; `examples/example-deck.pptx` is the export, untouched.
+
 ## Credits
 
 This is a thin wrapper. All the hard work is upstream:
@@ -21,7 +25,7 @@ Zip this folder and upload it under Customize > Skills > + > Create skill > Uplo
 npm install                                     # once
 node check.mjs examples/example-deck.html       # pre-flight
 npx dom-to-pptx-exporter examples/example-deck.html -o example-deck.pptx
-node meta.mjs example-deck.pptx "Example deck" "Your name"
+node meta.mjs example-deck.pptx "The Source of Truth Moved" "Athr21"
 ```
 
 Open `example-deck.pptx` in PowerPoint. Copy `examples/example-deck.html` as the starting point for a new deck.
@@ -35,7 +39,7 @@ Open `example-deck.pptx` in PowerPoint. Copy `examples/example-deck.html` as the
 | `reference/STYLE_RULES.md` | What CSS converts and what does not |
 | `meta.mjs` | Writes title and author into the .pptx (the exporter's flags are broken in 2.1.2) |
 | `check.mjs` | Pre-export check for the things that break silently. `node check.test.mjs` runs its self-test |
-| `examples/` | A three-slide example (HTML + the exported .pptx) in a neutral look |
+| `examples/` | The 14-slide Athr21 example: source HTML, exported .pptx, and a contact sheet of the result |
 | `package.json` | Pinned versions of the exporter and headless browser |
 
 ## Security in one paragraph

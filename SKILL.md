@@ -8,7 +8,7 @@ license: MIT (built on dom-to-pptx 2.1.2 by Atharva Dharmendra Jagtap and contri
 
 Write each slide as a 1920x1080 HTML box, run one command, get a .pptx where every heading, card, table and note is editable in PowerPoint. Nothing is uploaded anywhere; the export runs on the local machine.
 
-Tested 16 Sep 2026 with the example deck in `examples/`: near pixel match, editable text, native table, speaker notes carried over.
+Tested 16 Sep 2026 with the 14-slide example deck in `examples/` (an Athr21 talk on building a company's second brain, converted from a scrolling web deck): near pixel match, editable text, native table, speaker notes and an embedded web font carried over.
 
 ## 1. Brand first
 
@@ -42,7 +42,7 @@ Rules that matter (the full list is in `reference/STYLE_RULES.md`):
 - Use px everywhere. Position with `left/top` or flex/grid. Never `transform: translate()`.
 - Give every text element an explicit `width`, or PowerPoint may wrap it differently.
 - Logos and images: local files (`images/logo.png`) or base64 `data:` URIs. Both work with the exporter. No hotlinked images from the internet.
-- Tables: put background colours on `<td>` and `<th>`, not on `<tr>`. A background on `<tr>` is lost and white header text disappears.
+- Tables: put background colours on `<td>` and `<th>`, not on `<tr>`, and use symmetric cell padding (`16px 24px`). A `<tr>` background is lost; a padding with a 0 side breaks the cell margins and the table vanishes.
 - Solid colours, linear gradients, borders, border-radius, one outer shadow and `transform: rotate()` all export. Blur, blend modes, clip-path, inset shadows and hover states do not.
 
 ## 4. Check, then export

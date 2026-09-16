@@ -5,4 +5,6 @@ console.assert(bad('<div class="slide" style="transform:translate(1px)"></div>')
 console.assert(bad('<div class="slide"><tr style="background:#000"></tr></div>') === 1, 'tr background should fail');
 console.assert(bad('<div></div>') === 1, 'no slides should fail');
 console.assert(bad('<div class="slide"><img src="data:image/png;base64,AAAA100vhAAA"></div>') === 0, 'base64 must not trip vh rule');
-console.log('check.mjs: 5 assertions passed');
+console.assert(bad('<style>td{padding:0 24px 16px 0}</style><div class="slide"></div>') === 1, 'zero-side cell padding should fail');
+console.assert(bad('<style>td{padding:16px 24px}</style><div class="slide"></div>') === 0, 'symmetric cell padding should pass');
+console.log('check.mjs: 7 assertions passed');
