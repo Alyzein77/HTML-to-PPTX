@@ -1,0 +1,13 @@
+{
+  "name": "html-to-pptx",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned toolchain for exporting HTML slides to editable PowerPoint with dom-to-pptx.",
+  "type": "module",
+  "dependencies": {
+    "dom-to-pptx": "2.1.2",
+    "dom-to-pptx-exporter": "2.1.2",
+    "puppeteer": "25.11.0",
+    "jszip": "3.10.2"
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Example deck</title>
+<style>
+  body{margin:0;background:#dddddd}
+  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;background:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#111111;margin:0 0 24px 0}
+  .band{position:absolute;left:0;top:0;width:1920px;height:120px;background:#f2f2f2}
+  .mark{position:absolute;left:100px;top:36px;width:48px;height:48px;border-radius:10px;background:#1f2a44}
+  .brand{position:absolute;left:164px;top:40px;width:400px;font-size:34px;font-weight:700;color:#1f2a44}
+  .kicker{position:absolute;left:100px;width:1720px;font-size:26px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:#1f2a44}
+  .title{position:absolute;left:100px;margin:0;width:1720px;font-size:80px;font-weight:700;line-height:1.1}
+  .card{position:absolute;top:520px;width:520px;height:360px;background:#ffffff;border:2px solid #1f2a44;border-radius:8px}
+  .card .n{position:absolute;left:40px;top:36px;width:200px;font-size:64px;font-weight:700;color:#1f2a44}
+  .card .h{position:absolute;left:40px;top:130px;width:440px;font-size:34px;font-weight:700}
+  .card .p{position:absolute;left:40px;top:190px;width:440px;font-size:26px;line-height:1.4;color:#444444}
+  .foot{position:absolute;left:100px;top:1000px;width:1200px;font-size:20px;color:#777777}
+  .num{position:absolute;left:1720px;top:1000px;width:100px;text-align:right;font-size:20px;color:#777777}
+  th,td{text-align:left;padding:22px 28px}
+  th{background:#1f2a44;color:#ffffff}
+  td{border-bottom:2px solid #eeeeee}
+</style>
+</head>
+<body>
+
+<!-- Slide 1: title. A title slide carries no body text. -->
+<div class="slide" id="slide-1" data-pptx-notes="Open with the purpose of the session.">
+  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
+  <div class="kicker" style="top:420px">Internal</div>
+  <h1 class="title" style="top:470px">2027 Business Plan<br/>Working session</h1>
+  <div class="foot">Your company</div><div class="num">01</div>
+</div>
+
+<!-- Slide 2: three cards in a row, never three stacked. -->
+<div class="slide" id="slide-2" data-pptx-notes="Three workstreams. Any count on a slide needs the named list in the report.">
+  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
+  <div class="kicker" style="top:200px">Where we are</div>
+  <h1 class="title" style="top:250px;font-size:64px">Three workstreams, one owner each</h1>
+  <div class="card" style="left:100px"><div class="n">01</div><div class="h">Fleet</div><div class="p">Utilisation, ageing and the replacement cycle.</div></div>
+  <div class="card" style="left:700px"><div class="n">02</div><div class="h">Revenue</div><div class="p">Rate, mix and channel by brand.</div></div>
+  <div class="card" style="left:1300px"><div class="n">03</div><div class="h">Operations</div><div class="p">Branch throughput and the support queue.</div></div>
+  <div class="foot">Your company</div><div class="num">02</div>
+</div>
+
+<!-- Slide 3: native table. Backgrounds on th/td, never on tr. -->
+<div class="slide" id="slide-3" data-pptx-notes="Way forward comes last.">
+  <div class="band"></div><div class="mark"></div><div class="brand">Your brand</div>
+  <div class="kicker" style="top:200px">Way forward</div>
+  <h1 class="title" style="top:250px;font-size:64px">Next 30 days</h1>
+  <table style="position:absolute;left:100px;top:400px;width:1720px;border-collapse:collapse;font-size:30px">
+    <tr><th>Item</th><th>Owner</th><th>Due</th></tr>
+    <tr><td>Fleet ageing baseline</td><td>Fleet</td><td>Week 2</td></tr>
+    <tr><td>Rate card by brand</td><td>Revenue</td><td>Week 3</td></tr>
+    <tr><td>Support queue clean-up</td><td>Operations</td><td>Week 4</td></tr>
+  </table>
+  <div style="position:absolute;left:100px;top:760px;width:12px;height:120px;background:#e8590c"></div>
+  <div style="position:absolute;left:140px;top:760px;width:1600px;font-size:34px;line-height:1.4;font-weight:700">Decision needed: confirm the three owners before the plan is drafted.</div>
+  <div class="foot">Your company</div><div class="num">03</div>
+</div>
+
+</body>
+</html>
