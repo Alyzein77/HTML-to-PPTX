@@ -23,7 +23,8 @@ Zip this folder and upload it under Customize > Skills > + > Create skill > Uplo
 
 ```bash
 npm install                                     # once
-node check.mjs examples/example-deck.html       # pre-flight
+node check.mjs examples/example-deck.html       # pre-flight, regex
+node overflow.mjs examples/example-deck.html    # pre-flight, headless Chrome: text that will wrap
 node export.mjs examples/example-deck.html example-deck.pptx "The Source of Truth Moved" "Athr21"
 ```
 
@@ -40,8 +41,9 @@ Open `example-deck.pptx` in PowerPoint. Copy `examples/example-deck.html` as the
 | `SKILL.md` | The instructions Claude follows: brand rules, HTML rules, export command, security notes |
 | `reference/BRAND_TEMPLATE.md` | Copy to `BRAND.md` and fill in your palette, type, logo and layout rules |
 | `reference/STYLE_RULES.md` | What CSS converts and what does not |
-| `export.mjs` | The export command: keeps SVG charts as vectors and sets title and author (both things the stock CLI gets wrong) |
-| `meta.mjs` | Title and author writer, used by `export.mjs`; also runs on its own on an existing .pptx |
+| `export.mjs` | The export command: keeps SVG charts as vectors, switches off shape autofit, sets title and author (all things the stock CLI gets wrong) |
+| `overflow.mjs` | Opens the deck in headless Chrome and lists text that spills out of its box, which PowerPoint would wrap |
+| `meta.mjs` | Title, author and autofit fix, used by `export.mjs`; also runs on its own on an existing .pptx |
 | `check.mjs` | Pre-export check for the things that break silently. `node check.test.mjs` runs its self-test |
 | `examples/` | The 14-slide Athr21 deck and the three chart slides: source HTML, exported .pptx, and a contact sheet of each |
 | `package.json` | Pinned versions of the exporter and headless browser |

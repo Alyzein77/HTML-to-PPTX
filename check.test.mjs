@@ -1,4 +1,7 @@
 import { check } from './check.mjs';
+import { setMeta } from './meta.mjs';
+import { readFileSync } from 'node:fs';
+import JSZip from 'jszip';
 const bad = (h) => check(h).issues.length;
 console.assert(bad('<div class="slide" style="left:0"></div>') === 0, 'clean file should pass');
 console.assert(bad('<div class="slide" style="transform:translate(1px)"></div>') === 1, 'translate should fail');
@@ -9,4 +12,9 @@ console.assert(bad('<style>td{padding:0 24px 16px 0}</style><div class="slide"><
 console.assert(bad('<style>td{padding:16px 24px}</style><div class="slide"></div>') === 0, 'symmetric cell padding should pass');
 console.assert(bad('<div class="slide" style="border-radius:6px 6px 0 0"></div>') === 1, 'per-corner radius should fail');
 console.assert(bad('<div class="slide" style="border-radius:6px"></div>') === 0, 'single radius should pass');
-console.log('check.mjs: 9 assertions passed');
+const fixed = await setMeta(readFileSync('examples/charts.pptx'), 'T', 'A');
+const zip = await JSZip.loadAsync(fixed);
+const slide1 = await zip.file('ppt/slides/slide1.xml').async('string');
+console.assert(!slide1.includes('<a:spAutoFit/>') && slide1.includes('<a:noAutofit/>'), 'autofit should be switched off');
+console.assert((await zip.file('docProps/core.xml').async('string')).includes('<dc:title>T</dc:title>'), 'title should be set');
+console.log('check.mjs + meta.mjs: 11 assertions passed');

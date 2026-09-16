@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Set the title and author stored inside a .pptx.
+// Set the title and author stored inside a .pptx, and switch off shape autofit (see below).
 // dom-to-pptx 2.1.2 ignores its own --title/--author flags and writes "PptxGenJS", so export.mjs calls this after export.
 // Standalone usage: node meta.mjs deck.pptx "Deck title" "Your name"
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -10,6 +10,12 @@ const esc = (s) => s.replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&':
 
 export async function setMeta(buffer, title, author) {
   const zip = await JSZip.loadAsync(buffer);
+  // dom-to-pptx marks every text shape "resize shape to fit text". LibreOffice applies that on open and
+  // PowerPoint applies it on the first edit, so a filled box with centred text (a KPI tile, a heatmap
+  // cell) collapses to its text height. The HTML geometry is the truth: switch autofit off everywhere.
+  for (const f of Object.keys(zip.files).filter((n) => /^ppt\/slides\/slide\d+\.xml$/.test(n))) {
+    zip.file(f, (await zip.file(f).async('string')).replace(/<a:spAutoFit\/>/g, '<a:noAutofit/>'));
+  }
   const core = await zip.file('docProps/core.xml').async('string');
   zip.file('docProps/core.xml', core
     .replace(/<dc:title>[^<]*<\/dc:title>/, `<dc:title>${esc(title)}</dc:title>`)

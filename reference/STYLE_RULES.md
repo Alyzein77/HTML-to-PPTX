@@ -58,4 +58,7 @@ See SKILL.md section 4. Short form: bars are divs, lines are one inline SVG, com
 - Fonts embedded in the .pptx are honoured by PowerPoint. LibreOffice ignores them, so a LibreOffice preview can look wrong when the file is fine.
 - A 1680 px wide inline SVG placed at left:120 came out cropped and 2x scaled in raster mode; a full-slide SVG at 0,0 was fine. Vector mode (`export.mjs`) renders both correctly.
 - A bar with `border-radius:6px 6px 0 0` became a picture (five media files per bar). With `border-radius:4px` it is a native rounded rectangle.
+- Every text shape is exported with `<a:spAutoFit/>` (resize shape to fit text). A 380 px KPI tile and 110 px heatmap cells collapsed to their text height in LibreOffice, and PowerPoint does the same on the first edit. `meta.mjs` rewrites it to `<a:noAutofit/>` on every slide.
+- A big number (`212,550` at 88 px) that spilled 23 px past its tile in the browser wrapped onto two lines in PowerPoint. `overflow.mjs` reports exactly these.
+- A donut drawn with `stroke-dasharray` on circles lost one of three segments after vector export. `<path>` arcs rendered all three.
 - The exporter's `--title` and `--author` flags are silently ignored in 2.1.2; the file says "PptxGenJS". `meta.mjs` fixes the properties after export.
