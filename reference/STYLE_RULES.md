@@ -61,4 +61,7 @@ See SKILL.md section 4. Short form: bars are divs, lines are one inline SVG, com
 - Every text shape is exported with `<a:spAutoFit/>` (resize shape to fit text). A 380 px KPI tile and 110 px heatmap cells collapsed to their text height in LibreOffice, and PowerPoint does the same on the first edit. `meta.mjs` rewrites it to `<a:noAutofit/>` on every slide.
 - A big number (`212,550` at 88 px) that spilled 23 px past its tile in the browser wrapped onto two lines in PowerPoint. `overflow.mjs` reports exactly these.
 - A donut drawn with `stroke-dasharray` on circles lost one of three segments after vector export. `<path>` arcs rendered all three.
+- A sparkline `<svg>` inside a `<td>` exported as an empty cell. The same SVG positioned over the table rendered.
+- Labels written before a full-slide SVG were hidden under it (funnel labels). DOM order is z-order.
+- Twenty Harvey balls, three gauges, a radar, a funnel, a slope chart and a stacked area, all as SVG paths and polygons, exported as vectors with no loss.
 - The exporter's `--title` and `--author` flags are silently ignored in 2.1.2; the file says "PptxGenJS". `meta.mjs` fixes the properties after export.

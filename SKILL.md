@@ -49,14 +49,39 @@ Rules that matter (the full list is in `reference/STYLE_RULES.md`):
 
 ## 4. Charts
 
-Tested 16 Sep 2026 (`examples/charts.html`). Three ways, pick by what the chart is:
+Tested 16 Sep 2026 across `examples/charts.html`, `examples/charts-gallery.html` and a private 12-slide gallery. Three building blocks cover every chart a business deck needs:
 
-- **Bars, columns, stacked bars, gantt blocks, legends: divs.** Each bar is an absolutely positioned div with a height in px; each label is a text div. Every bar arrives in PowerPoint as a native shape you can recolour or resize. Use one `border-radius` value or none; a per-corner radius (`6px 6px 0 0`) turns the bar into a picture.
-- **Lines, areas, scatter, donuts, anything curved: one inline `<svg>`.** Use `polyline`, `path`, `circle`, `line`, `text`. Draw donut and pie segments as `<path>` arcs (`A rx ry 0 large sweep x y`), not as circles with `stroke-dasharray` tricks: the dasharray version lost a segment in testing. `export.mjs` keeps it as a vector; in PowerPoint, right-click > Convert to Shape makes every line and point editable. Keep the `<svg>` at a fixed px size and position, with a matching `viewBox`.
-- **Complex, overlapping charts: layer them.** Grid lines and bars as divs underneath, one full-slide SVG (`left:0;top:0;width:1920;height:1080`) for lines and shaded areas over them, callouts and annotation ticks as divs on top. DOM order is z-order. Transparency (`opacity`, `rgba`) and `transform: rotate()` on pointer lines both survive.
-- **Never:** `<canvas>`, Chart.js, Recharts, Plotly, D3 rendering to canvas. Nothing is captured. If a chart already exists as a picture, embed it as a PNG `<img>` and accept it is not editable.
-- Put axis labels, values and legends in HTML text divs rather than SVG `<text>` when you can: they are editable without converting anything.
-- Heatmaps, KPI tiles, waterfalls, stacked bars: all divs. Sixty bars on one slide exported fine. Format numbers in the HTML (`12,200`, `-1,331`, `13.9k`); nothing formats them for you later.
+- **Divs** for anything rectangular: bars, columns, stacked and 100% stacked bars, waterfalls, tornados, bullets, gantt bars, marimekko blocks, treemaps, heatmap cells, KPI tiles, axis rules, grid lines, legends, connectors. Each becomes a native PowerPoint shape. One `border-radius` value or none; a per-corner radius turns the box into a picture.
+- **One inline `<svg>`** for anything with a curve or a diagonal: lines, areas, scatter connectors, donuts, gauges, Harvey balls, radar polygons, funnels, slope charts, sparklines. `export.mjs` keeps it as a vector; right-click > Convert to Shape in PowerPoint makes it editable. Fixed px size and position, matching `viewBox`.
+- **HTML text divs** for every label, value, axis tick and legend entry, so they are editable without converting anything. Format numbers in the HTML (`12,200`, `-1,331`, `+16%`); nothing formats them later.
+
+Recipes that worked, by chart type:
+
+| Chart | Build |
+|---|---|
+| Bar, column, stacked, 100% stacked | One div per segment, height in px from the value. 60 segments on a slide is fine |
+| Waterfall / bridge | Totals in the brand colour, increases green, decreases red, a 2 px grey div as the connector at the running level, every bar labelled with its sign, 7 to 10 bars, group the rest as Other |
+| P&L / income statement | One positioned text div per cell (not a `<table>`, so rows can carry bars); subtotal rows bold with a 3 px rule; variance as signed number plus a horizontal bar div, green when good for the business |
+| Line, area, stacked area | `<polyline>` / `<polygon>` in one SVG; markers as small round divs on top |
+| Combo, dual axis | Bars as divs, the line in a full-slide SVG placed after them in the DOM, right-axis ticks as text divs |
+| Donut, pie, gauge, Harvey ball | `<path>` arcs (`A r r 0 large sweep x y`). Never `stroke-dasharray` on a circle: it lost a segment |
+| Tornado | Paired divs left and right of a centre rule |
+| Bullet | Nested divs: range band, target band, actual bar, a 4 px tick for the target |
+| Gantt | One div per bar on a month grid of 1 px rules, a red rule for a milestone |
+| Marimekko | Column width from one measure, stacked heights from the other, all divs |
+| Treemap | Divs; compute the areas yourself |
+| Bubble / 2x2 scatter | Round divs (`border-radius:50%`) positioned by the two measures, diameter from the third |
+| Radar | SVG polygons for rings and series, text divs for axis names |
+| Funnel | SVG polygons (trapezoids), labels as text divs placed after the SVG |
+| Slope | SVG lines and circles, text divs at each end |
+| Sparkline in a table | An SVG inside a `<td>` is dropped. Leave the cell empty and place a small positioned SVG over it |
+| Rotated axis labels | `transform: rotate(-45deg)` on the text div works |
+
+Rules that bite:
+
+- **DOM order is z-order.** A full-slide SVG covers every div written before it. Write backgrounds and bars first, the SVG next, labels and callouts last.
+- Never `<canvas>`, Chart.js, Recharts, Plotly, D3-to-canvas. Nothing is captured. A chart that exists only as a picture goes in as a PNG `<img>` and stays a picture.
+- Colour by meaning: increases and good variances green, decreases and bad variances red, totals in the brand colour, one accent per slide.
 
 ## 5. Check, then export
 

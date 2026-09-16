@@ -12,9 +12,11 @@ console.assert(bad('<style>td{padding:0 24px 16px 0}</style><div class="slide"><
 console.assert(bad('<style>td{padding:16px 24px}</style><div class="slide"></div>') === 0, 'symmetric cell padding should pass');
 console.assert(bad('<div class="slide" style="border-radius:6px 6px 0 0"></div>') === 1, 'per-corner radius should fail');
 console.assert(bad('<div class="slide" style="border-radius:6px"></div>') === 0, 'single radius should pass');
+console.assert(bad('<div class="slide"><table><tr><td><svg></svg></td></tr></table></div>') === 1, 'svg in td should fail');
+console.assert(bad('<div class="slide"><table><tr><td>x</td></tr></table><svg></svg></div>') === 0, 'svg outside td should pass');
 const fixed = await setMeta(readFileSync('examples/charts.pptx'), 'T', 'A');
 const zip = await JSZip.loadAsync(fixed);
 const slide1 = await zip.file('ppt/slides/slide1.xml').async('string');
 console.assert(!slide1.includes('<a:spAutoFit/>') && slide1.includes('<a:noAutofit/>'), 'autofit should be switched off');
 console.assert((await zip.file('docProps/core.xml').async('string')).includes('<dc:title>T</dc:title>'), 'title should be set');
-console.log('check.mjs + meta.mjs: 11 assertions passed');
+console.log('check.mjs + meta.mjs: 13 assertions passed');

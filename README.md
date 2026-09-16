@@ -32,6 +32,10 @@ Charts work too: bars as divs (editable shapes), lines as inline SVG (kept as ve
 
 ![Bar, trend and combo charts as exported](examples/charts.png)
 
+And the consulting set: P&L view with variance bars, EBITDA bridge, gantt, marimekko, tornado, bullets, Harvey balls, gauges (`examples/charts-gallery.html`).
+
+![P&L, bridge, gantt, marimekko, tornado, bullets, Harvey balls, gauges](examples/charts-gallery.png)
+
 Open `example-deck.pptx` in PowerPoint. Copy `examples/example-deck.html` as the starting point for a new deck.
 
 ## What is in here
@@ -45,7 +49,7 @@ Open `example-deck.pptx` in PowerPoint. Copy `examples/example-deck.html` as the
 | `overflow.mjs` | Opens the deck in headless Chrome and lists text that spills out of its box, which PowerPoint would wrap |
 | `meta.mjs` | Title, author and autofit fix, used by `export.mjs`; also runs on its own on an existing .pptx |
 | `check.mjs` | Pre-export check for the things that break silently. `node check.test.mjs` runs its self-test |
-| `examples/` | The 14-slide Athr21 deck and the three chart slides: source HTML, exported .pptx, and a contact sheet of each |
+| `examples/` | The 14-slide Athr21 deck, three basic chart slides and a four-slide consulting chart gallery: source HTML, exported .pptx, and a contact sheet of each |
 | `package.json` | Pinned versions of the exporter and headless browser |
 
 ## Security in one paragraph

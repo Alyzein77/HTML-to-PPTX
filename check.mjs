@@ -12,6 +12,7 @@ export const rules = [
   [/box-shadow\s*:\s*inset/i, 'inset box-shadow is ignored.'],
   [/(?:<t[dh][^>]*style="[^"]*|\bt[dh]\s*\{[^}]*)padding\s*:\s*[^;"}]*\b0(?:px)?\b/i, 'Cell padding with a 0 side (e.g. padding:0 24px 16px 0) exports as huge margins and hides the table. Use symmetric padding like 16px 24px.'],
   [/border-radius\s*:\s*[^;"}]+\s[^;"}]+/i, 'Per-corner border-radius (e.g. 6px 6px 0 0) turns the box into a picture, not an editable shape. Use one value.'],
+  [/<t[dh][^>]*>(?:(?!<\/t[dh]>).)*<svg/is, 'An <svg> inside a table cell is dropped. Leave the cell empty and position the SVG over it.'],
   [/<tr[^>]*style="[^"]*background/i, 'background on <tr> is lost. Put the background on each <td>/<th> instead.'],
   [/<script[^>]*src="https?:\/\//i, 'External <script src="http..."> in the HTML. Not needed for export; remove it.'],
   [/@latest/i, '"@latest" pulls unpinned code from the internet. Pin the version or remove.'],
