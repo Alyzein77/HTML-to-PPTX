@@ -7,4 +7,6 @@ console.assert(bad('<div></div>') === 1, 'no slides should fail');
 console.assert(bad('<div class="slide"><img src="data:image/png;base64,AAAA100vhAAA"></div>') === 0, 'base64 must not trip vh rule');
 console.assert(bad('<style>td{padding:0 24px 16px 0}</style><div class="slide"></div>') === 1, 'zero-side cell padding should fail');
 console.assert(bad('<style>td{padding:16px 24px}</style><div class="slide"></div>') === 0, 'symmetric cell padding should pass');
-console.log('check.mjs: 7 assertions passed');
+console.assert(bad('<div class="slide" style="border-radius:6px 6px 0 0"></div>') === 1, 'per-corner radius should fail');
+console.assert(bad('<div class="slide" style="border-radius:6px"></div>') === 0, 'single radius should pass');
+console.log('check.mjs: 9 assertions passed');

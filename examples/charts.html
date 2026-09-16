@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>Chart tests</title>
+<style>
+  body{margin:0;background:#1a1a1a;font-family:Arial,Helvetica,sans-serif}
+  .slide{width:1920px;height:1080px;position:relative;overflow:hidden;background:#fff;color:#111;margin:0 0 24px 0}
+  h2{position:absolute;left:120px;top:100px;margin:0;width:1680px;font-size:56px;font-weight:700}
+  .lbl{position:absolute;font-size:24px;color:#444;width:120px;text-align:center}
+  .val{position:absolute;font-size:24px;font-weight:700;width:120px;text-align:center}
+  .axis{position:absolute;left:200px;top:820px;width:1560px;height:3px;background:#111}
+  .grid{position:absolute;left:200px;width:1560px;height:2px;background:#e5e5e5}
+  .bar{position:absolute;width:120px;background:#1f2a44;border-radius:4px}
+  .bar.b{background:#e8590c}
+</style></head><body>
+
+<!-- A. Bar chart made of divs: every bar is an editable shape -->
+<div class="slide" id="bars" data-pptx-notes="Bars are divs.">
+  <h2>Bar chart: every bar is a div, so every bar is an editable shape</h2>
+  <div class="grid" style="top:320px"></div><div class="grid" style="top:445px"></div><div class="grid" style="top:570px"></div><div class="grid" style="top:695px"></div>
+  <div class="lbl" style="left:70px;top:305px;width:110px;text-align:right">400</div>
+  <div class="lbl" style="left:70px;top:555px;width:110px;text-align:right">200</div>
+  <div class="lbl" style="left:70px;top:805px;width:110px;text-align:right">0</div>
+  <div class="axis"></div>
+  <!-- 6 months, two series. height = value*1.25px; bottom at 820 -->
+  <div class="bar" style="left:260px;top:570px;height:250px"></div><div class="bar b" style="left:390px;top:670px;height:150px"></div><div class="lbl" style="left:260px;top:840px;width:250px">Apr</div>
+  <div class="bar" style="left:520px;top:520px;height:300px"></div><div class="bar b" style="left:650px;top:632px;height:188px"></div><div class="lbl" style="left:520px;top:840px;width:250px">May</div>
+  <div class="bar" style="left:780px;top:445px;height:375px"></div><div class="bar b" style="left:910px;top:595px;height:225px"></div><div class="lbl" style="left:780px;top:840px;width:250px">Jun</div>
+  <div class="bar" style="left:1040px;top:470px;height:350px"></div><div class="bar b" style="left:1170px;top:545px;height:275px"></div><div class="lbl" style="left:1040px;top:840px;width:250px">Jul</div>
+  <div class="bar" style="left:1300px;top:370px;height:450px"></div><div class="bar b" style="left:1430px;top:507px;height:313px"></div><div class="lbl" style="left:1300px;top:840px;width:250px">Aug</div>
+  <div class="val" style="left:1300px;top:330px">360</div><div class="val" style="left:1430px;top:467px;color:#e8590c">250</div>
+  <div style="position:absolute;left:1400px;top:220px;width:24px;height:24px;background:#1f2a44"></div><div style="position:absolute;left:1436px;top:216px;width:200px;font-size:24px">Revenue</div>
+  <div style="position:absolute;left:1600px;top:220px;width:24px;height:24px;background:#e8590c"></div><div style="position:absolute;left:1636px;top:216px;width:200px;font-size:24px">Cost</div>
+</div>
+
+<!-- B. Trend line as inline SVG -->
+<div class="slide" id="trend" data-pptx-notes="Line chart is one inline SVG.">
+  <h2>Trend line: one inline SVG, kept as a vector</h2>
+  <svg style="position:absolute;left:120px;top:220px" width="1680" height="680" viewBox="0 0 1680 680" font-family="Arial" font-size="24">
+    <g stroke="#e5e5e5" stroke-width="2"><line x1="100" y1="80" x2="1640" y2="80"/><line x1="100" y1="230" x2="1640" y2="230"/><line x1="100" y1="380" x2="1640" y2="380"/><line x1="100" y1="530" x2="1640" y2="530"/></g>
+    <line x1="100" y1="600" x2="1640" y2="600" stroke="#111" stroke-width="3"/>
+    <path d="M100 600 L100 470 L357 420 L614 440 L871 330 L1128 300 L1385 200 L1640 120 L1640 600 Z" fill="#1f2a44" opacity="0.12"/>
+    <polyline points="100,470 357,420 614,440 871,330 1128,300 1385,200 1640,120" fill="none" stroke="#1f2a44" stroke-width="6" stroke-linejoin="round"/>
+    <polyline points="100,520 357,500 614,505 871,470 1128,480 1385,440 1640,430" fill="none" stroke="#e8590c" stroke-width="6" stroke-dasharray="14 10"/>
+    <g fill="#1f2a44"><circle cx="100" cy="470" r="9"/><circle cx="357" cy="420" r="9"/><circle cx="614" cy="440" r="9"/><circle cx="871" cy="330" r="9"/><circle cx="1128" cy="300" r="9"/><circle cx="1385" cy="200" r="9"/><circle cx="1640" cy="120" r="9"/></g>
+    <g fill="#444" text-anchor="middle"><text x="100" y="640">Q1</text><text x="357" y="640">Q2</text><text x="614" y="640">Q3</text><text x="871" y="640">Q4</text><text x="1128" y="640">Q1</text><text x="1385" y="640">Q2</text><text x="1640" y="640">Q3</text></g>
+    <text x="1560" y="100" fill="#1f2a44" font-weight="700" text-anchor="end">Active users</text>
+    <text x="1560" y="415" fill="#e8590c" font-weight="700" text-anchor="end">Churned</text>
+  </svg>
+</div>
+
+<!-- C. Combo: div bars + overlapping SVG line + annotation box on top -->
+<div class="slide" id="combo" data-pptx-notes="Bars are divs; the line and area are one SVG layered over them; the callout is a div on top.">
+  <h2>Combo: div bars, an SVG trend on top, a callout on top of that</h2>
+  <div class="grid" style="top:320px"></div><div class="grid" style="top:445px"></div><div class="grid" style="top:570px"></div><div class="grid" style="top:695px"></div>
+  <div class="axis"></div>
+  <div class="bar" style="left:260px;top:620px;height:200px;width:180px"></div>
+  <div class="bar" style="left:520px;top:560px;height:260px;width:180px"></div>
+  <div class="bar" style="left:780px;top:600px;height:220px;width:180px"></div>
+  <div class="bar" style="left:1040px;top:470px;height:350px;width:180px"></div>
+  <div class="bar" style="left:1300px;top:400px;height:420px;width:180px"></div>
+  <div class="bar" style="left:1560px;top:340px;height:480px;width:180px"></div>
+  <div class="lbl" style="left:290px;top:840px">Apr</div><div class="lbl" style="left:550px;top:840px">May</div><div class="lbl" style="left:810px;top:840px">Jun</div><div class="lbl" style="left:1070px;top:840px">Jul</div><div class="lbl" style="left:1330px;top:840px">Aug</div><div class="lbl" style="left:1590px;top:840px">Sep</div>
+  <svg style="position:absolute;left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <path d="M350 700 L610 660 L870 690 L1130 560 L1390 520 L1650 430 L1650 820 L350 820 Z" fill="#e8590c" opacity="0.18"/>
+    <polyline points="350,700 610,660 870,690 1130,560 1390,520 1650,430" fill="none" stroke="#e8590c" stroke-width="8" stroke-linejoin="round"/>
+    <g fill="#fff" stroke="#e8590c" stroke-width="6"><circle cx="350" cy="700" r="12"/><circle cx="610" cy="660" r="12"/><circle cx="870" cy="690" r="12"/><circle cx="1130" cy="560" r="12"/><circle cx="1390" cy="520" r="12"/><circle cx="1650" cy="430" r="12"/></g>
+  </svg>
+  <div style="position:absolute;left:1180px;top:250px;width:420px;padding:20px 24px;background:#fff;border:3px solid #e8590c;border-radius:8px;font-size:24px;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,0.15)"><b>Margin turned in July.</b><br/>Rate card by brand went live on the 3rd.</div>
+  <div style="position:absolute;left:1400px;top:345px;width:4px;height:70px;background:#e8590c;transform:rotate(-35deg)"></div>
+</div>
+
+</body></html>
